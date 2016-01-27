@@ -1032,6 +1032,10 @@ typedef void (NpyIter_GetMultiIndexFunc)(NpyIter *iter,
 #define NPY_ITER_GLOBAL_FLAGS               0x0000ffff
 #define NPY_ITER_PER_OP_FLAGS               0xffff0000
 
+/*****************************
+* Deferred array object
+*****************************/
+#include "deferredarray.h"
 
 /*****************************
  * Basic iterator object
@@ -1432,12 +1436,14 @@ PyArray_NDIM(const PyArrayObject *arr)
 static NPY_INLINE void *
 PyArray_DATA(PyArrayObject *arr)
 {
+    PyDeferredArray_Materialize((PyObject*)arr);
     return ((PyArrayObject_fields *)arr)->data;
 }
 
 static NPY_INLINE char *
 PyArray_BYTES(PyArrayObject *arr)
 {
+    PyDeferredArray_Materialize((PyObject*)arr);
     return ((PyArrayObject_fields *)arr)->data;
 }
 

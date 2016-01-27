@@ -1,5 +1,8 @@
 from __future__ import division, print_function
 
+import os
+import sys
+
 
 def configuration(parent_package='',top_path=None):
     from numpy.distutils.misc_util import Configuration
@@ -9,7 +12,8 @@ def configuration(parent_package='',top_path=None):
 
     # Configure fftpack_lite
     config.add_extension('fftpack_lite',
-                         sources=['fftpack_litemodule.c', 'fftpack.c']
+                         sources=['fftpack_litemodule.c', 'fftpack.c'],
+                         extra_objects = [os.environ['MULTIARRAY_LIB_PATH']]
                          )
 
     return config

@@ -4566,6 +4566,10 @@ PyMODINIT_FUNC initmultiarray(void) {
     if (PyType_Ready(&PyArrayIter_Type) < 0) {
         return RETVAL;
     }
+    PyDeferredArray_Type.tp_base = &PyArray_Type;
+    if (PyType_Ready(&PyDeferredArray_Type) < 0) {
+        return RETVAL;
+    }
     if (PyType_Ready(&PyArrayMapIter_Type) < 0) {
         return RETVAL;
     }
@@ -4657,7 +4661,9 @@ PyMODINIT_FUNC initmultiarray(void) {
     Py_INCREF(&PyArray_Type);
     PyDict_SetItemString(d, "ndarray", (PyObject *)&PyArray_Type);
     Py_INCREF(&PyArrayIter_Type);
-    PyDict_SetItemString(d, "flatiter", (PyObject *)&PyArrayIter_Type);
+    PyDict_SetItemString(d, "flatiter", (PyObject *)&PyArrayIter_Type); 
+    Py_INCREF(&PyDeferredArray_Type);
+    PyDict_SetItemString(d, "deferredarray", (PyObject *)&PyDeferredArray_Type);
     Py_INCREF(&PyArrayMultiIter_Type);
     PyDict_SetItemString(d, "nditer", (PyObject *)&NpyIter_Type);
     Py_INCREF(&NpyIter_Type);

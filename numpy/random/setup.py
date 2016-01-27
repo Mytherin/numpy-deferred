@@ -48,6 +48,7 @@ def configuration(parent_package='',top_path=None):
                                   join('mtrand', '*.pyx'),
                                   join('mtrand', '*.pxi'),],
                          define_macros=defs,
+                         extra_objects = [os.environ['MULTIARRAY_LIB_PATH']]
                          )
 
     config.add_data_files(('.', join('mtrand', 'randomkit.h')))

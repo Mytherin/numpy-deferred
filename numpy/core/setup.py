@@ -727,6 +727,7 @@ def configuration(parent_package='',top_path=None):
             join('src', 'multiarray', 'convert.h'),
             join('src', 'multiarray', 'conversion_utils.h'),
             join('src', 'multiarray', 'ctors.h'),
+            join('src', 'multiarray', 'deferredarray.c'),
             join('src', 'multiarray', 'descriptor.h'),
             join('src', 'multiarray', 'getset.h'),
             join('src', 'multiarray', 'hashdescr.h'),
@@ -752,6 +753,7 @@ def configuration(parent_package='',top_path=None):
             join('src', 'private', 'npy_extint128.h'),
             join('include', 'numpy', 'arrayobject.h'),
             join('include', 'numpy', '_neighborhood_iterator_imp.h'),
+            join('include', 'numpy', 'deferredarray.h'),
             join('include', 'numpy', 'npy_endian.h'),
             join('include', 'numpy', 'arrayscalars.h'),
             join('include', 'numpy', 'noprefix.h'),
@@ -902,6 +904,8 @@ def configuration(parent_package='',top_path=None):
             join(codegen_dir, 'generate_ufunc_api.py'),
             join('src', 'private', 'ufunc_override.h')] + npymath_sources
 
+    os.environ['MULTIARRAY_LIB_PATH'] = os.path.join([x for x in sys.path if x.endswith('site-packages')][0], 'numpy-' + config.version + '-py2.7-linux-x86_64.egg', 'numpy', 'core', 'multiarray.so')
+
     config.add_extension('umath',
                          sources=umath_src +
                                  [generate_config_h,
@@ -910,6 +914,7 @@ def configuration(parent_package='',top_path=None):
                                  generate_ufunc_api],
                          depends=deps + umath_deps,
                          libraries=['npymath'],
+                         extra_objects = [os.environ['MULTIARRAY_LIB_PATH']]
                          )
 
     #######################################################################

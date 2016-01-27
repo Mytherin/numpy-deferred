@@ -119,7 +119,6 @@ def get_version_info():
 
     if not ISRELEASED:
         FULLVERSION += '.dev0+' + GIT_REVISION[:7]
-
     return FULLVERSION, GIT_REVISION
 
 

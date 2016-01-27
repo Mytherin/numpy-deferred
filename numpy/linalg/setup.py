@@ -40,6 +40,7 @@ def configuration(parent_package='', top_path=None):
         sources=['lapack_litemodule.c', get_lapack_lite_sources],
         depends=['lapack_lite/f2c.h'],
         extra_info=lapack_info,
+        extra_objects = [os.environ['MULTIARRAY_LIB_PATH']]
     )
 
     # umath_linalg module
